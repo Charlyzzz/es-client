@@ -1,7 +1,6 @@
 import React from 'react';
-import logo from '../logo.svg';
 import '../App.css';
-import { Footer, Row, Col } from 'react-materialize';
+import { Footer } from 'react-materialize';
 
 const AppFooter = () => {
   return (
