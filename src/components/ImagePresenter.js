@@ -28,9 +28,8 @@ export default class ImagePresenter extends Component {
     this.setState({photos: [...this.state.photos, ...photos]})
   }
 
-  onNewPhoto({ filename }) {
-    const newPhoto = { date: new Date(), url: filename }
-    const photos = [...this.state.photos, newPhoto]
+  onNewPhoto(photo) {
+    const photos = [...this.state.photos, photo]
     this.setState({ photos })
   }
 
@@ -41,8 +40,8 @@ export default class ImagePresenter extends Component {
         <h4>Imágenes</h4>
         <Collapsible accordion >
           {
-            photos.map(({ date }, index) =>
-              <CollapsibleItem header="Fecha" key={index}>
+            photos.map(({ moment }, index) =>
+              <CollapsibleItem header={moment} key={index}>
                 <img src="http://localhost:4000/images/image.jpg" alt="" width="100%" />
               </CollapsibleItem>
             )
