@@ -1,19 +1,28 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import React3 from 'react-three-renderer';
 import * as THREE from 'three';
+import background from '../background'
 
 const UP = "ArrowUp"
 const DOWN = "ArrowDown"
 const RIGHT = "ArrowRight"
 const LEFT = "ArrowLeft"
-const STEPS = 8
+const ENTER = "Enter"
+const STEPS = 16
 const ROTATION_ANGLE = Math.PI / STEPS
+const MAX_POSITION = 8;
+const MIN_POSITION = 0;
 
 class Canvas extends Component {
-  
-  constructor(props){
+
+  constructor(props) {
     super(props)
-    this.state = { cubeRotation: new THREE.Euler() }
+    this.state = {
+      x: 4,
+      y: 4
+    }
+    const loader = new THREE.ObjectLoader();
+    loader.load('file://src/background.jpg', console.log)
     this.registerKeyPressedListener()
   }
 
@@ -22,43 +31,48 @@ class Canvas extends Component {
   }
 
   keyPressed = ({ key }) => {
-    switch(key) {
+    const { x, y } = this.state;
+    switch (key) {
       case UP:
-        this.rotateCubeX(ROTATION_ANGLE)
+        this.updatePosition(x, y + 1);
         break;
       case DOWN:
-      this.rotateCubeX(-ROTATION_ANGLE)
+        this.updatePosition(x, y - 1);
         break;
       case LEFT:
-      this.rotateCubeY(ROTATION_ANGLE)
+        this.updatePosition(x - 1, y);
         break;
       case RIGHT:
-      this.rotateCubeY(-ROTATION_ANGLE)
+        this.updatePosition(x + 1, y);
+        break;
+      case ENTER:
+        this.props.requestPhoto(this.state);
         break;
       default:
     }
   }
 
-  rotateCubeX = (angle) => { this.rotateCube(angle, 0) }
-  rotateCubeY = (angle) => { this.rotateCube(0, angle) }
+  updatePosition = (newX, newY) => {
+    const x = this.clamp(newX)
+    const y = this.clamp(newY)
+    this.setState({ x, y })
+  }
 
-  rotateCube = (x, y) => {
-    this.setState({ cubeRotation: new THREE.Euler( this.state.cubeRotation.x - x, this.state.cubeRotation.y - y) })
+  clamp(value) {
+    return Math.min(Math.max(value, MIN_POSITION), MAX_POSITION);
   }
 
   render() {
     const width = 800
     const height = 500
     const cameraPosition = new THREE.Vector3(0, 0, 0);
-    const boxPosition = new THREE.Vector3(1, 0, -2);
+    const boxPosition = new THREE.Vector3(0, 0, -2);
     const cilynderPosition = new THREE.Vector3(0, 0, -8);
-    
+    const { x, y } = this.state
+    const cubeRotation = new THREE.Euler((y - 4) * ROTATION_ANGLE, - (x - 4) * ROTATION_ANGLE)
 
-    return (      
-      <div className="center-align">      
-        <p className="App-intro">
-          Press <code>🡨 🡪 🡩 🡫</code> on your keyboard to move the camera around.
-        </p>
+    return (
+      <div>
         <React3 mainCamera="camera" width={width} height={height} >
           <scene>
             <perspectiveCamera
@@ -67,17 +81,23 @@ class Canvas extends Component {
               aspect={width / height}
               near={0.1}
               far={1000}
-              position={cameraPosition}/>
-              <mesh position={boxPosition} rotation={this.state.cubeRotation}>
-                <boxGeometry width={1} height={1} depth={1}/>
-                <meshNormalMaterial wireframe={false}/>
-              </mesh>
-              <mesh position={cilynderPosition}  rotation={this.state.cubeRotation}>
-                <cylinderGeometry height={2} radialSegments={32} openEnded={2}/>
-                <meshNormalMaterial wireframe={true}/>
-              </mesh>
+              position={cameraPosition} />
+            <mesh position={boxPosition} rotation={cubeRotation}>
+              <boxGeometry width={1} height={1} depth={1} />
+              <meshNormalMaterial wireframe={false} />
+            </mesh>
+            <mesh position={cilynderPosition}>
+              <cylinderGeometry height={2} radialSegments={32} openEnded={2} />
+              <meshNormalMaterial wireframe={true} />
+            </mesh>
           </scene>
         </React3>
+        <p className="intro center-align">
+          Press <code>🡨 🡪 🡩 🡫</code> on your keyboard to move the camera around.
+        </p>
+        <p className="intro center-align">
+          Position {x} {y}
+        </p>
       </div>
     );
   }

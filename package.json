@@ -1,19 +1,29 @@
 {
-  "name": "es-client",
+  "name": "foo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "phoenix": "^1.4.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-materialize": "^1.1.0",
-    "react-scripts": "1.0.17",
-    "react-three-renderer": "^3.2.3",
-    "three": "^0.88.0"
+    "react-materialize": "^2.5.1",
+    "react-scripts": "2.1.1",
+    "react-three-renderer": "^3.2.4",
+    "three": "^0.86.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
-  }
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
