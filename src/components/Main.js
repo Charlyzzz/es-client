@@ -11,7 +11,8 @@ const Main = () => {
           requestPhoto={API.requestPhoto} />
       </div>
       <div className='presenter'>
-        <ImagePresenter />
+        <ImagePresenter
+          allPhotos={API.allPhotos} />
       </div>
     </div>
   )

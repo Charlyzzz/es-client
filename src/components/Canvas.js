@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import React3 from 'react-three-renderer';
 import * as THREE from 'three';
-import background from '../background'
 
 const UP = "ArrowUp"
 const DOWN = "ArrowDown"
@@ -21,8 +20,6 @@ class Canvas extends Component {
       x: 4,
       y: 4
     }
-    const loader = new THREE.ObjectLoader();
-    loader.load('file://src/background.jpg', console.log)
     this.registerKeyPressedListener()
   }
 
@@ -46,7 +43,7 @@ class Canvas extends Component {
         this.updatePosition(x + 1, y);
         break;
       case ENTER:
-        this.props.requestPhoto(this.state);
+        this.props.requestPhoto({x, y});
         break;
       default:
     }
@@ -73,7 +70,7 @@ class Canvas extends Component {
 
     return (
       <div>
-        <React3 mainCamera="camera" width={width} height={height} >
+        <React3 mainCamera="camera" width={width} height={height}>
           <scene>
             <perspectiveCamera
               name="camera"
