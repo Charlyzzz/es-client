@@ -79,14 +79,14 @@ class Canvas extends Component {
               near={0.1}
               far={1000}
               position={cameraPosition} />
-            <mesh position={boxPosition} rotation={cubeRotation}>
-              <boxGeometry width={1} height={1} depth={1} />
-              <meshNormalMaterial wireframe={false} />
-            </mesh>
-            <mesh position={cilynderPosition}>
-              <cylinderGeometry height={2} radialSegments={32} openEnded={2} />
-              <meshNormalMaterial wireframe={true} />
-            </mesh>
+              <mesh position={boxPosition} rotation={cubeRotation}>
+                <boxGeometry width={1} height={1} depth={1} />
+                <meshNormalMaterial wireframe={false} />
+              </mesh>
+              <mesh position={cilynderPosition}>
+                <cylinderGeometry height={2} radialSegments={32} openEnded={2} />
+                <meshNormalMaterial wireframe={true} />
+              </mesh>
           </scene>
         </React3>
         <p className="intro center-align">

@@ -41,7 +41,7 @@ export default class ImagePresenter extends Component {
         <Collapsible accordion >
           {
             photos.map(({ moment }, index) =>
-              <CollapsibleItem header={moment} key={index}>
+              <CollapsibleItem header={new Date(moment).toLocaleString()} key={index}>
                 <img src="http://localhost:4000/images/image.jpg" alt="" width="100%" />
               </CollapsibleItem>
             )
