@@ -33,6 +33,10 @@ export default class ImagePresenter extends Component {
     this.setState({ photos })
   }
 
+  urlFor(filename){
+    return `http://localhost:4000/images/${filename}`
+  }
+
   render() {
     const { photos } = this.state;
     return (
@@ -40,9 +44,9 @@ export default class ImagePresenter extends Component {
         <h4>Imágenes</h4>
         <Collapsible accordion >
           {
-            photos.map(({ moment }, index) =>
+            photos.map(({ moment, filename }, index) =>
               <CollapsibleItem header={new Date(moment).toLocaleString()} key={index}>
-                <img src="http://localhost:4000/images/image.jpg" alt="" width="100%" />
+                <img src={this.urlFor(filename)} alt="" width="100%" />
               </CollapsibleItem>
             )
           }
